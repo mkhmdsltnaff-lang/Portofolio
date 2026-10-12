@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mukhammad Suulton Afifulloh | Portfolio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#06b6d4',
+                            indigo: '#6366f1',
+                            dark: '#07090e',
+                            card: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Style & Animasi CSS Keyframes -->
+    <style>
+        /* Gradient Glow Background Animation */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 6s infinite ease-in-out;
+        }
+
+        /* Floating Element Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Shimmer Effect on Text */
+        @keyframes textShimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: textShimmer 5s linear infinite;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-[#07090e] text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500 selection:text-white">
+
+    <!-- Interactive Background Particles Canvas -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#07090e]/80 backdrop-blur-md border-b border-slate-800/60 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
+                <span class="animate-shimmer font-black text-2xl">Sulton</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800/80 text-cyan-400 font-mono group-hover:scale-105 transition-transform">PRO</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">Tentang Saya</a>
+                <a href="#services" class="hover:text-cyan-400 transition-colors">Layanan</a>
+                <a href="#portfolio" class="hover:text-cyan-400 transition-colors">Portofolio</a>
+                <a href="#experience" class="hover:text-cyan-400 transition-colors">Pengalaman</a>
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:-translate-y-0.5">Hubungi Saya</a>
+            </nav>
+
+            <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0f172a] border-b border-slate-800 px-6 py-4 flex flex-col space-y-4 text-sm font-medium">
+            <a href="#about" class="hover:text-cyan-400">Tentang Saya</a>
+            <a href="#services" class="hover:text-cyan-400">Layanan</a>
+            <a href="#portfolio" class="hover:text-cyan-400">Portofolio</a>
+            <a href="#experience" class="hover:text-cyan-400">Pengalaman</a>
+            <a href="#contact" class="text-cyan-400 font-semibold">Hubungi Saya</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 md:pt-44 md:pb-32 relative z-10 overflow-hidden">
+        <!-- Animated Background Blur Bulbs -->
+        <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
+        <div class="absolute top-1/2 right-10 w-80 h-80 bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none animate-pulse-glow" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            
+            <!-- Hero Text -->
+            <div class="md:col-span-7 space-y-6 text-center md:text-left" data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    Visual Designer & Web Developer
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    Mukhammad <br/>
+                    <span class="animate-shimmer">Sulton Afifulloh</span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed">
+                    Menghubungkan visual branding kreatif, sinematografi video, dan sistem web development fungsional untuk menghasilkan solusi digital yang berdampak.
+                </p>
+
+                <div class="pt-2 flex flex-wrap gap-4 justify-center md:justify-start">
+                    <a href="#portfolio" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-1 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase text-sm"></i> Jelajahi Karya
+                    </a>
+                    <a href="#contact" class="px-7 py-3.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-semibold transition-all duration-300 hover:-translate-y-1 flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-sm"></i> Hubungi Saya
+                    </a>
+                </div>
+
+                <!-- Fast Stats Badge -->
+                <div class="pt-8 grid grid-cols-3 gap-4 border-t border-slate-800/80 text-center md:text-left">
+                    <div>
+                        <p class="text-2xl font-bold text-white font-mono">FEB UNISMA</p>
+                        <p class="text-xs text-slate-400">S1 Manajemen</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-cyan-400 font-mono">RPL</p>
+                        <p class="text-xs text-slate-400">Software Engineering</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-indigo-400 font-mono">3-in-1</p>
+                        <p class="text-xs text-slate-400">Design, Video & Fotografer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image Frame (FOTO ASLI MENGGUNAKAN IMG_3354.jpg) -->
+            <div class="md:col-span-5 flex justify-center relative" data-aos="fade-left" data-aos-duration="1000">
+                <div class="relative w-72 h-[380px] sm:w-80 sm:h-[440px] rounded-3xl p-2 bg-gradient-to-b from-cyan-500/40 via-indigo-500/20 to-transparent shadow-2xl animate-float">
+                    <div class="w-full h-full rounded-2xl overflow-hidden bg-slate-900 relative border border-slate-800">
+                        <img src="IMG_3354.JPEG" alt="Mukhammad Suulton Afifulloh" class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#07090e] via-transparent to-transparent opacity-50"></div>
+                    </div>
+                    
+                    <!-- Floating Interactive Badge 1 -->
+                    <div class="absolute -bottom-4 -left-6 glass-card px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-float" style="animation-delay: 1s;">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid fa-code text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Fullstack Creative</p>
+                            <p class="text-[10px] text-slate-400">Web & Multimedia</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 2 -->
+                    <div class="absolute top-8 -right-6 glass-card px-3.5 py-2 rounded-2xl shadow-2xl flex items-center gap-2.5 animate-float" style="animation-delay: 2.5s;">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-xs font-semibold text-slate-200">Open to Work</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative z-10 bg-slate-900/40 border-y border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-2 font-mono">// TENTANG SAYA</h2>
+                <p class="text-3xl font-bold text-white">Kombinasi Strategi Bisnis & Keterampilan Teknis Digital</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-4 text-slate-300 leading-relaxed" data-aos="fade-right">
+                    <p>
+                        Saya <strong class="text-white">Mukhammad Sulton Afifulloh</strong>, seorang profesional lulusan S1 Manajemen FEB UNISMA dengan latar belakang keahlian SMK Rekayasa Perangkat Lunak (RPL).
+                    </p>
+                    <p>
+                        Perpaduan ilmu manajemen dan keahlian rekayasa lunak memungkinkan saya mengeksekusi proyek dengan orientasi hasil yang terstruktur, mulai dari konseptualisasi visual branding, sinematografi, hingga implementasi aplikasi web.
+                    </p>
+                    <p>
+                        Aktif dalam organisasi DPM FEB UNISMA (Komisi Undang-Undang) dan Studio Marketing & Entrepreneurship (Divisi Cinematography), saya terbiasa bekerja dalam tim, kepemimpinan acara, dan manajemen proyek kreatif.
+                    </p>
+                </div>
+
+                <!-- Skills & Tools Interactive Cards -->
+                <div class="space-y-4" data-aos="fade-left">
+                    <div class="glass-card p-6 rounded-2xl transition-all hover:translate-x-2">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fa-solid fa-code text-cyan-400 text-xl"></i>
+                            <h3 class="font-bold text-white">Web Development & Cloud</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-cyan-300 font-mono">HTML5 / CSS3</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-cyan-300 font-mono">Tailwind CSS</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-cyan-300 font-mono">JavaScript</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-cyan-300 font-mono">Vercel & Supabase</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-cyan-300 font-mono">GitHub Pages</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl transition-all hover:translate-x-2">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fa-solid fa-palette text-indigo-400 text-xl"></i>
+                            <h3 class="font-bold text-white">Graphic & Visual Branding</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-indigo-300 font-mono">Photoshop</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-indigo-300 font-mono">3D Typography</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-indigo-300 font-mono">Logo Identity</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-indigo-300 font-mono">Vector Design</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl transition-all hover:translate-x-2">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fa-solid fa-film text-purple-400 text-xl"></i>
+                            <h3 class="font-bold text-white">Video & Cinematography</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-purple-300 font-mono">CapCut PC</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-purple-300 font-mono">Video Bumper</span>
+                            <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-purple-300 font-mono">Aftermovie Production</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-2 font-mono">// LAYANAN</h2>
+                <p class="text-3xl font-bold text-white">Solusi Digital Berstandar Profesional</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-3xl transition-all hover:-translate-y-3 duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-all duration-300">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Pengembangan landing page, sistem pendaftaran online, dan portofolio interaktif yang responsif, cepat, dan teroptimasi SEO.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl transition-all hover:-translate-y-3 duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:bg-indigo-500 group-hover:text-slate-950 transition-all duration-300">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Visual & Graphic Branding</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Desain identitas merek, tipografi 3D, materi promosi acara, desain spanduk/panggung, serta pembuatan elemen branding instansi.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl transition-all hover:-translate-y-3 duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:bg-purple-500 group-hover:text-slate-950 transition-all duration-300">
+                        <i class="fa-solid fa-clapperboard"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Video & Editing</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Editing video promo, pembuatan bumper video interaktif, penulisan skrip profil lembaga, dan dokumentasi aftermovie event.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Tanpa Gambar Dummy / Tanpa Foto Palsu) -->
+    <section id="portfolio" class="py-24 relative z-10 bg-slate-900/40 border-t border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-2 font-mono">// PORTOFOLIO</h2>
+                <p class="text-3xl font-bold text-white">Karya & Proyek Terpilih</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-3xl overflow-hidden transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="h-44 bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-950 p-6 flex flex-col justify-between border-b border-slate-800 relative">
+                        <span class="self-start text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">WEB APP</span>
+                        <i class="fa-solid fa-code text-5xl text-cyan-500/20 absolute right-6 bottom-4"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-white mb-2">Sistem Web Registrasi SPNF SKB</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-4">Pengembangan sistem pendaftaran dan landing page instansi SPNF SKB Kota Malang selama masa magang.</p>
+                        <span class="text-xs font-mono text-cyan-400 inline-flex items-center gap-1">HTML, CSS, JS, Vercel</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-3xl overflow-hidden transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="h-44 bg-gradient-to-br from-purple-950 via-slate-900 to-slate-950 p-6 flex flex-col justify-between border-b border-slate-800 relative">
+                        <span class="self-start text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">CINEMATOGRAPHY</span>
+                        <i class="fa-solid fa-video text-5xl text-purple-500/20 absolute right-6 bottom-4"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-white mb-2">Video Profil & Motion Aftermovie</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-4">Produksi video profil instansi, video bumper, dan aftermovie resmi Dies Natalis FEB UNISMA.</p>
+                        <span class="text-xs font-mono text-purple-400 inline-flex items-center gap-1">CapCut PC, Premiere, Motion</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-3xl overflow-hidden transition-all duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="h-44 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 p-6 flex flex-col justify-between border-b border-slate-800 relative">
+                        <span class="self-start text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">BRANDING</span>
+                        <i class="fa-solid fa-pen-nib text-5xl text-indigo-500/20 absolute right-6 bottom-4"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-white mb-2">3D Typography & Stage Aesthetics</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-4">Perancangan elemen tipografi 3D, pamflet event, dan desain visual panggung utama kegiatan kemahasiswaan.</p>
+                        <span class="text-xs font-mono text-indigo-400 inline-flex items-center gap-1">Photoshop, Vector, Branding</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-2 font-mono">// PENGALAMAN</h2>
+                <p class="text-3xl font-bold text-white">Rekam Jejak & Kepemimpinan</p>
+            </div>
+
+            <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:-translate-x-1/2 before:w-0.5 before:bg-slate-800">
+                <div class="relative flex flex-col md:flex-row items-start group" data-aos="fade-up">
+                    <div class="w-8 h-8 rounded-full bg-[#07090e] border-2 border-cyan-400 flex items-center justify-center absolute left-0 md:left-1/2 -translate-x-1/2 z-10 text-cyan-400 text-xs">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div class="ml-12 md:ml-0 md:w-1/2 md:pr-12 md:text-right space-y-1">
+                        <span class="text-[10px] font-mono text-cyan-400 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-800">INTERNSHIP</span>
+                        <h3 class="text-lg font-bold text-white">SPNF SKB Kota Malang</h3>
+                        <p class="text-slate-400 text-xs">Pengembangan Branding, Penulisan Skrip Video Profil, & Web Registrasi Online.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex flex-col md:flex-row items-start group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-8 h-8 rounded-full bg-[#07090e] border-2 border-indigo-400 flex items-center justify-center absolute left-0 md:left-1/2 -translate-x-1/2 z-10 text-indigo-400 text-xs">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="ml-12 md:ml-0 md:w-1/2 md:pl-12 md:ml-auto space-y-1">
+                        <span class="text-[10px] font-mono text-indigo-400 bg-indigo-950 px-2.5 py-0.5 rounded-full border border-indigo-800">DPM FEB UNISMA</span>
+                        <h3 class="text-lg font-bold text-white">Anggota Komisi Undang-Undang</h3>
+                        <p class="text-slate-400 text-xs">Penyusunan produk hukum organisasi & pengawasan lembaga kemahasiswaan.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex flex-col md:flex-row items-start group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-8 h-8 rounded-full bg-[#07090e] border-2 border-purple-400 flex items-center justify-center absolute left-0 md:left-1/2 -translate-x-1/2 z-10 text-purple-400 text-xs">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div class="ml-12 md:ml-0 md:w-1/2 md:pr-12 md:text-right space-y-1">
+                        <span class="text-[10px] font-mono text-purple-400 bg-purple-950 px-2.5 py-0.5 rounded-full border border-purple-800">STUDIO MARKETING FEB</span>
+                        <h3 class="text-lg font-bold text-white">Divisi Cinematography</h3>
+                        <p class="text-slate-400 text-xs">Pengelolaan konten kreatif, produksi video promosi, & tim visual Dies Natalis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <section id="contact" class="py-24 relative z-10 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-white">Mari Bekerja Sama!</h2>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                Apakah Anda membutuhkan bantuan untuk proyek desain, produksi video, atau pembuatan website?
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="mailto:mkhmmdsulton@gmail.com?subject=Tawaran%20Proyek%20/%20Kerja%20Sama" class="px-6 py-3 rounded-full bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-200 text-sm font-semibold transition-all duration-300 hover:-translate-y-1 flex items-center gap-2">
+                    <i class="fa-solid fa-envelope text-cyan-400"></i> Email Saya
+                </a>
+                </a>
+                <a href="https://wa.me/6285645161943?text=Halo%20Mas%20Sulton,%20saya%20tertarik%20untuk%20berdiskusi%20mengenai%20proyek." 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="px-6 py-3 rounded-full bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 text-sm font-semibold transition-all duration-300 hover:-translate-y-1 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
+                <a href="https://www.instagram.com/xltn.png?cplk=MWJlZmpnMzhhd2Vlbg%3D%3D&utm_source=qr" target="_blank" class="px-6 py-3 rounded-full bg-slate-800 border border-slate-700 hover:border-pink-400 text-slate-200 text-sm font-semibold transition-all duration-300 hover:-translate-y-1 flex items-center gap-2">
+                    <i class="fa-brands fa-instagram text-pink-400"></i> Instagram
+                </a>
+            </div>
+
+            <div class="pt-12 border-t border-slate-800 text-xs text-slate-500 font-mono">
+                <p>&copy; 2026 Mukhammad Sulton Afifulloh. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AOS (Animate On Scroll) JS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Inisialisasi AOS Animation
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-out-cubic'
+        });
+
+        // Toggle Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Background Canvas Particle Animation (Matrix/Cyber Particles)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 45;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 0.5,
+                color: Math.random() > 0.5 ? '#06b6d4' : '#6366f1',
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+    </script>
+</body>
+</html>
